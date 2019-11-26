@@ -15,12 +15,13 @@ namespace Redukcja_kolorow
     public partial class Form1 : Form
     {
         Bitmap pictureTexture, bmp2, bmp3;
-        Color[,] colors;
+        Color[,] colors, bitmapColors;
         Octree tree;
+        int colorReduction = 1;
         public Form1()
         {
             InitializeComponent();
-            pictureTexture = new Bitmap("example2.bmp");
+            pictureTexture = new Bitmap("test.jpg");
             using (pictureTexture)
             {
                 bmp2 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -38,7 +39,7 @@ namespace Redukcja_kolorow
                     colors = GetColorsFromBitmap(bmp3, pictureBox2.Width, pictureBox2.Height);
                 }
             }
-            InitTree();
+            bitmapColors = (Color[,])colors.Clone();
         }
 
         private void InitTree()
@@ -47,8 +48,47 @@ namespace Redukcja_kolorow
             for (int i = 0; i < pictureBox2.Width; i++)
                 for (int j = 0; j < pictureBox2.Height; j++)
                 {
-                    tree.InsertTree(new BinaryColor(colors[i, j]), 0);
+                    var a = new BinaryColor(bitmapColors[i, j]);
+                    tree.InsertTree(a, 0);
                 }
+        }
+        private void ReduceColors()
+        {
+            InitTree();
+            tree.Reduce(colorReduction);
+            UpdateColors(tree);
+        }
+
+        private void UpdateColors(Octree tree)
+        {
+            //Parallel.For(0, pictureBox2.Width, i =>
+            //{
+            //    Parallel.For(0, pictureBox2.Height, j =>
+            //    {
+            //        Color color = colors[i, j];
+            //        colors[i, j] = tree.GetColor(new BinaryColor(color));
+            //    });
+            //});
+            for (int i = 0; i < pictureBox2.Width; i++)
+                for (int j = 0; j < pictureBox2.Height; j++)
+                {
+                    Color color = bitmapColors[i, j];
+                    colors[i, j] = tree.GetColor(new BinaryColor(color));
+                    progressBar1.Increment(1);
+                }
+            pictureBox2.Invalidate();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            progressBar1.Value = 0;
+            ReduceColors();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            colorReduction = trackBar1.Value;
+            label1.Text = "to: " + trackBar1.Value.ToString();
         }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
