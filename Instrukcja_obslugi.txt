@@ -1,0 +1,24 @@
+Instrukcja obsługi:
+
+Aplikacja prezentuje kompresje obrazów do wybranej liczby kolorów za pomocą drzewa Octree.
+Aplikacja posiada trzy okna prezentujące obrazy. Domyślnie wszystkie prezentują tą samą grafikę.
+Po wybraniu liczby kolorów (za pomocą suwaka pod największym obrazem) i kliknięciu
+przycisku Reduce to x colors (gdzie x to liczba aktualnie wybrana z suwaka, że
+x > 0 oraz x<=1024) dwa mniejsze obrazy po prawej stronie zostaną zredukowane
+do x kolorów.
+
+Pierwszy z obrazów (w górnym prawym rogu) zostanie zredukowany następująco:
+na początku zostanie utworzone drzewo Octree ze wszystkich kolorów z tekstury,
+następnie drzewo zostanie to zredukowane, usuwając kolory w liściach, które występują
+najrzadziej i przenosząc ich liczbę występowania do rodzica. Operacja ta
+będzie wykonywana do momentu aż w drzewie zostanie x bądź mniej liści.
+
+Drugi obraz zaś jest redukowany na bieżąco, czyli:
+dodaje się kolejne kolory do drzewa, do momentu aż liczba liści przekroczy x.
+Jeżeli po dodaniu to nastąpiło, to następuje redukcja do x jak wyżej.
+
+Nad obrazami są podpisy oraz informacja, ilu kolorów użyto.
+
+Domyślnie można edytować pewną teksturę, ale istnieje też opcja wgrania własnego obrazu.
+Obraz ten powinien być w formacie .jpg albo .bmp.
+Aby to zrobić wystaczy kliknąć przycisk Change Bitmap i wybrać odpowiedni plik z menu.
