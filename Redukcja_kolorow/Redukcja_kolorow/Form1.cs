@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,34 +9,34 @@ namespace Redukcja_kolorow
 {
     public partial class Form1 : Form
     {
-        Bitmap pictureTexture, bmp2, bmp3;
+        Bitmap pictureTexture, bmpAfterConstruction, bmpAlongConstruction;
         Color[,] colors, bitmapColors, colorsSecondVersion;
         Octree tree, secondTree;
         int colorReduction = 1;
         public Form1()
         {
             InitializeComponent();
-            pictureTexture = new Bitmap("example2.bmp");
+            pictureTexture = new Bitmap("example.bmp");
             UploadBitmapData();
         }
         private void UploadBitmapData()
         {
             using (pictureTexture)
             {
-                bmp2 = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                bmp3 = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-                using (var g = Graphics.FromImage(bmp2))
+                bmpAfterConstruction = new Bitmap(picMain.Width, picMain.Height);
+                bmpAlongConstruction = new Bitmap(picAfterConstruction.Width, picAfterConstruction.Height);
+                using (var g = Graphics.FromImage(bmpAfterConstruction))
                 {
                     g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    g.DrawImage(pictureTexture, new Rectangle(Point.Empty, bmp2.Size));
-                    pictureBox1.Image = bmp2;
+                    g.DrawImage(pictureTexture, new Rectangle(Point.Empty, bmpAfterConstruction.Size));
+                    picMain.Image = bmpAfterConstruction;
                 }
-                using (var g = Graphics.FromImage(bmp3))
+                using (var g = Graphics.FromImage(bmpAlongConstruction))
                 {
                     g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    g.DrawImage(pictureTexture, new Rectangle(Point.Empty, bmp3.Size));
-                    colors = GetColorsFromBitmap(bmp3, pictureBox2.Width, pictureBox2.Height);
-                    colorsSecondVersion = GetColorsFromBitmap(bmp3, pictureBox3.Width, pictureBox3.Height);
+                    g.DrawImage(pictureTexture, new Rectangle(Point.Empty, bmpAlongConstruction.Size));
+                    colors = GetColorsFromBitmap(bmpAlongConstruction, picAfterConstruction.Width, picAfterConstruction.Height);
+                    colorsSecondVersion = GetColorsFromBitmap(bmpAlongConstruction, picAlongConstruction.Width, picAlongConstruction.Height);
                 }
             }
             bitmapColors = (Color[,])colors.Clone();
@@ -50,8 +45,8 @@ namespace Redukcja_kolorow
         private void InitTree()
         {
             tree = new Octree();
-            for (int i = 0; i < pictureBox2.Width; i++)
-                for (int j = 0; j < pictureBox2.Height; j++)
+            for (int i = 0; i < picAfterConstruction.Width; i++)
+                for (int j = 0; j < picAfterConstruction.Height; j++)
                 {
                     var a = new BinaryColor(bitmapColors[i, j]);
                     tree.InsertTree(a, 0);
@@ -62,11 +57,11 @@ namespace Redukcja_kolorow
         private void InitSecondTree()
         {
             secondTree = new Octree();
-            for (int i = 0; i < pictureBox3.Width; i++)
-                for (int j = 0; j < pictureBox3.Height; j++)
+            for (int i = 0; i < picAlongConstruction.Width; i++)
+                for (int j = 0; j < picAlongConstruction.Height; j++)
                 {
                     var a = new BinaryColor(bitmapColors[i, j]);
-                    secondTree.InsertTreeSecondVersion(a, 0,colorReduction);
+                    secondTree.InsertTreeSecondVersion(a, 0, colorReduction);
                     progressBar2.Increment(1);
                 }
             var b = secondTree.GetLeafParents();
@@ -83,8 +78,8 @@ namespace Redukcja_kolorow
 
         private void UpdateColors(Octree tree)
         {
-            for (int i = 0; i < pictureBox2.Width; i++)
-                for (int j = 0; j < pictureBox2.Height; j++)
+            for (int i = 0; i < picAfterConstruction.Width; i++)
+                for (int j = 0; j < picAfterConstruction.Height; j++)
                 {
                     Color color = bitmapColors[i, j];
                     colors[i, j] = tree.GetColor(new BinaryColor(color));
@@ -92,16 +87,16 @@ namespace Redukcja_kolorow
                 }
             var leafParents = tree.GetLeafParents();
             int leafsNumber = tree.GetLeafCount(leafParents);
-            if(leafsNumber != 1)
-                label3.Text = $"using: {leafsNumber} colors";
+            if (leafsNumber != 1)
+                lblAfterConstruction.Text = $"using: {leafsNumber} colors";
             else
-                label3.Text = $"using: {leafsNumber} color";
-            pictureBox2.Invalidate();
+                lblAfterConstruction.Text = $"using: {leafsNumber} color";
+            picAfterConstruction.Invalidate();
         }
         private void UpdateColorsSecondVersion(Octree tree)
         {
-            for (int i = 0; i < pictureBox3.Width; i++)
-                for (int j = 0; j < pictureBox3.Height; j++)
+            for (int i = 0; i < picAlongConstruction.Width; i++)
+                for (int j = 0; j < picAlongConstruction.Height; j++)
                 {
                     Color color = bitmapColors[i, j];
                     colorsSecondVersion[i, j] = secondTree.GetColor(new BinaryColor(color));
@@ -110,18 +105,18 @@ namespace Redukcja_kolorow
             var leafParents = secondTree.GetLeafParents();
             int leafsNumber = secondTree.GetLeafCount(leafParents);
             if (leafsNumber != 1)
-                label4.Text = $"using: {leafsNumber} colors";
+                lblAlongConstruction.Text = $"using: {leafsNumber} colors";
             else
-                label4.Text = $"using: {leafsNumber} color";
-            pictureBox3.Invalidate();
+                lblAlongConstruction.Text = $"using: {leafsNumber} color";
+            picAlongConstruction.Invalidate();
         }
 
-        private void pictureBox3_Paint(object sender, PaintEventArgs e)
+        private void picAlongConstruction_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap temporaryBitmap = new Bitmap(pictureBox3.Width, pictureBox3.Height);
+            Bitmap temporaryBitmap = new Bitmap(picAlongConstruction.Width, picAlongConstruction.Height);
             unsafe
             {
-                BitmapData bitmapData = temporaryBitmap.LockBits(new Rectangle(0, 0, pictureBox3.Width, pictureBox3.Height), ImageLockMode.ReadWrite, temporaryBitmap.PixelFormat);
+                BitmapData bitmapData = temporaryBitmap.LockBits(new Rectangle(0, 0, picAlongConstruction.Width, picAlongConstruction.Height), ImageLockMode.ReadWrite, temporaryBitmap.PixelFormat);
                 int heightInPixels = bitmapData.Height;
                 int bytesPerPixel = Bitmap.GetPixelFormatSize(temporaryBitmap.PixelFormat) / 8;
                 int widthInBytes = bitmapData.Width * bytesPerPixel;
@@ -143,29 +138,100 @@ namespace Redukcja_kolorow
             e.Graphics.DrawImage(temporaryBitmap, 0, 0);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnGenerateTexture_Click(object sender, EventArgs e)
+        {
+            pictureTexture = GenerateBitmap(picMain.Width, picMain.Height);
+            UploadBitmapData();
+            picMain.Invalidate();
+            picAfterConstruction.Invalidate();
+            picAlongConstruction.Invalidate();
+            lblAfterConstruction.Text = "using: all colors";
+            lblAlongConstruction.Text = "using: all colors";
+        }
+
+        private Bitmap GenerateBitmap(int x, int y)
+        {
+            float radius = 10;
+            float R = (float)Math.Min(0.3 * x, 0.3 * y);
+            Bitmap bitmap = new Bitmap(x, y);
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                using (SolidBrush brush = new SolidBrush(Color.White))
+                {
+                    g.FillRectangle(brush, (int)(0.1 * x), (int)(0.1 * y), (int)(0.9 * x), (int)(0.9 * y));
+                }
+                using (SolidBrush brush = new SolidBrush(Color.Black))
+                {
+                    g.FillRectangle(brush, 0, 0, (int)(0.1 * x), y);
+                    g.FillRectangle(brush, 0, 0, x, (int)(0.1 * y));
+                    g.FillRectangle(brush, (int)(0.9 * x), 0, x, y);
+                    g.FillRectangle(brush, 0, (int)(0.9 * y), x, y);
+                }
+                for (int i = 0; i < 18; i++)
+                {
+                    double angle = i*2 * Math.PI / 18;
+                    Color color = ColorFromHSV((double)i*20,1,1);
+                    using (SolidBrush brush = new SolidBrush(color))
+                    {
+                        float centerX = (float)(R * Math.Sin(angle) + 0.5*x);
+                        float centerY = (float)(R * Math.Cos(angle) + 0.5*y);
+                        g.FillEllipse(brush, centerX - radius, centerY - radius,
+                      radius + radius, radius + radius);
+                    }
+                }
+            }
+            return bitmap;
+        }
+
+        public static Color ColorFromHSV(double hue, double saturation, double value)
+        {
+            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+            double f = hue / 60 - Math.Floor(hue / 60);
+
+            value = value * 255;
+            int v = Convert.ToInt32(value);
+            int p = Convert.ToInt32(value * (1 - saturation));
+            int q = Convert.ToInt32(value * (1 - f * saturation));
+            int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
+
+            if (hi == 0)
+                return Color.FromArgb(255, v, t, p);
+            else if (hi == 1)
+                return Color.FromArgb(255, q, v, p);
+            else if (hi == 2)
+                return Color.FromArgb(255, p, v, t);
+            else if (hi == 3)
+                return Color.FromArgb(255, p, q, v);
+            else if (hi == 4)
+                return Color.FromArgb(255, t, p, v);
+            else
+                return Color.FromArgb(255, v, p, q);
+        }
+
+
+        private void btnChangeBitmap_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Image";
-                dlg.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg";
+                dlg.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap original = new Bitmap(dlg.FileName);
-                    Bitmap resized = new Bitmap(original, new Size(pictureBox1.Width, pictureBox1.Height));
+                    Bitmap resized = new Bitmap(original, new Size(picMain.Width, picMain.Height));
                     pictureTexture = resized;
                     UploadBitmapData();
-                    pictureBox1.Invalidate();
-                    pictureBox2.Invalidate();
-                    pictureBox3.Invalidate();
+                    picMain.Invalidate();
+                    picAfterConstruction.Invalidate();
+                    picAlongConstruction.Invalidate();
                 }
             }
-            label3.Text = "using: all colors";
-            label4.Text = "using: all colors";
+            lblAfterConstruction.Text = "using: all colors";
+            lblAlongConstruction.Text = "using: all colors";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnReduce_Click(object sender, EventArgs e)
         {
             progressBar1.Value = 0;
             progressBar2.Value = 0;
@@ -173,18 +239,20 @@ namespace Redukcja_kolorow
             InitSecondTree();
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trcMain_Scroll(object sender, EventArgs e)
         {
-            colorReduction = trackBar1.Value;
-            button1.Text = "Reduce to: " + trackBar1.Value.ToString();
+            colorReduction = trcMain.Value;
+            btnReduce.Text = "Reduce to: " + trcMain.Value.ToString();
         }
 
-        private void pictureBox2_Paint(object sender, PaintEventArgs e)
+        private void picAfterConstruction_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap temporaryBitmap = new Bitmap(pictureBox2.Width, pictureBox2.Height);
+            Bitmap temporaryBitmap = new Bitmap(picAfterConstruction.Width, picAfterConstruction.Height);
+            //code below transforms colors array into ready to display bitmap
             unsafe
             {
-                BitmapData bitmapData = temporaryBitmap.LockBits(new Rectangle(0, 0, pictureBox2.Width, pictureBox2.Height), ImageLockMode.ReadWrite, temporaryBitmap.PixelFormat);
+                BitmapData bitmapData = temporaryBitmap.LockBits(new Rectangle(0, 0, picAfterConstruction.Width, picAfterConstruction.Height),
+                    ImageLockMode.ReadWrite, temporaryBitmap.PixelFormat);
                 int heightInPixels = bitmapData.Height;
                 int bytesPerPixel = Bitmap.GetPixelFormatSize(temporaryBitmap.PixelFormat) / 8;
                 int widthInBytes = bitmapData.Width * bytesPerPixel;

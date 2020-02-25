@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Redukcja_kolorow
 {
@@ -116,7 +114,7 @@ namespace Redukcja_kolorow
                 colorCount = colorCount - a + 1;
             }
         }
-        //return old childs count
+        //returns old childs count
         private int ReduceNode()
         {
             int count = 0;
@@ -144,7 +142,7 @@ namespace Redukcja_kolorow
             {
                 int result = x.CompareTo(y);
                 if (result == 0)
-                    return 1;   // Handle equality as beeing greater
+                    return 1;   
                 else
                     return result;
             }

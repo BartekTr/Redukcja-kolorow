@@ -28,59 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.picMain = new System.Windows.Forms.PictureBox();
+            this.picAfterConstruction = new System.Windows.Forms.PictureBox();
+            this.picAlongConstruction = new System.Windows.Forms.PictureBox();
+            this.btnReduce = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trcMain = new System.Windows.Forms.TrackBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.lblAfterConstruction = new System.Windows.Forms.Label();
+            this.lblAlongConstruction = new System.Windows.Forms.Label();
+            this.btnChangeBitmap = new System.Windows.Forms.Button();
+            this.btnGenerateTexture = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAfterConstruction)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlongConstruction)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trcMain)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // picMain
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(59, 55);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(658, 353);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.picMain.Location = new System.Drawing.Point(59, 55);
+            this.picMain.Name = "picMain";
+            this.picMain.Size = new System.Drawing.Size(658, 353);
+            this.picMain.TabIndex = 0;
+            this.picMain.TabStop = false;
             // 
-            // pictureBox2
+            // picAfterConstruction
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(814, 55);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(518, 244);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
+            this.picAfterConstruction.Location = new System.Drawing.Point(814, 55);
+            this.picAfterConstruction.Name = "picAfterConstruction";
+            this.picAfterConstruction.Size = new System.Drawing.Size(518, 244);
+            this.picAfterConstruction.TabIndex = 1;
+            this.picAfterConstruction.TabStop = false;
+            this.picAfterConstruction.Paint += new System.Windows.Forms.PaintEventHandler(this.picAfterConstruction_Paint);
             // 
-            // pictureBox3
+            // picAlongConstruction
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(814, 390);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(518, 244);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox3_Paint);
+            this.picAlongConstruction.Location = new System.Drawing.Point(814, 390);
+            this.picAlongConstruction.Name = "picAlongConstruction";
+            this.picAlongConstruction.Size = new System.Drawing.Size(518, 244);
+            this.picAlongConstruction.TabIndex = 2;
+            this.picAlongConstruction.TabStop = false;
+            this.picAlongConstruction.Paint += new System.Windows.Forms.PaintEventHandler(this.picAlongConstruction_Paint);
             // 
-            // button1
+            // btnReduce
             // 
-            this.button1.Location = new System.Drawing.Point(132, 476);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(204, 62);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Reduce to 1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnReduce.Location = new System.Drawing.Point(132, 476);
+            this.btnReduce.Name = "btnReduce";
+            this.btnReduce.Size = new System.Drawing.Size(204, 62);
+            this.btnReduce.TabIndex = 3;
+            this.btnReduce.Text = "Reduce to 1";
+            this.btnReduce.UseVisualStyleBackColor = true;
+            this.btnReduce.Click += new System.EventHandler(this.btnReduce_Click);
             // 
             // progressBar1
             // 
@@ -91,17 +92,17 @@
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 4;
             // 
-            // trackBar1
+            // trcMain
             // 
-            this.trackBar1.Location = new System.Drawing.Point(59, 414);
-            this.trackBar1.Maximum = 1024;
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(658, 56);
-            this.trackBar1.TabIndex = 5;
-            this.trackBar1.TickFrequency = 25;
-            this.trackBar1.Value = 1;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trcMain.Location = new System.Drawing.Point(59, 414);
+            this.trcMain.Maximum = 1024;
+            this.trcMain.Minimum = 1;
+            this.trcMain.Name = "trcMain";
+            this.trcMain.Size = new System.Drawing.Size(658, 56);
+            this.trcMain.TabIndex = 5;
+            this.trcMain.TickFrequency = 25;
+            this.trcMain.Value = 1;
+            this.trcMain.Scroll += new System.EventHandler(this.trcMain_Scroll);
             // 
             // progressBar2
             // 
@@ -132,61 +133,72 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Reduce along octree construction";
             // 
-            // label3
+            // lblAfterConstruction
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(1143, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(127, 20);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "using: all colors";
+            this.lblAfterConstruction.AutoSize = true;
+            this.lblAfterConstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblAfterConstruction.Location = new System.Drawing.Point(1143, 22);
+            this.lblAfterConstruction.Name = "lblAfterConstruction";
+            this.lblAfterConstruction.Size = new System.Drawing.Size(127, 20);
+            this.lblAfterConstruction.TabIndex = 10;
+            this.lblAfterConstruction.Text = "using: all colors";
             // 
-            // label4
+            // lblAlongConstruction
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.Location = new System.Drawing.Point(1143, 355);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(127, 20);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "using: all colors";
+            this.lblAlongConstruction.AutoSize = true;
+            this.lblAlongConstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblAlongConstruction.Location = new System.Drawing.Point(1143, 355);
+            this.lblAlongConstruction.Name = "lblAlongConstruction";
+            this.lblAlongConstruction.Size = new System.Drawing.Size(127, 20);
+            this.lblAlongConstruction.TabIndex = 11;
+            this.lblAlongConstruction.Text = "using: all colors";
             // 
-            // button2
+            // btnChangeBitmap
             // 
-            this.button2.Location = new System.Drawing.Point(463, 476);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(204, 62);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "Change bitmap";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnChangeBitmap.Location = new System.Drawing.Point(463, 476);
+            this.btnChangeBitmap.Name = "btnChangeBitmap";
+            this.btnChangeBitmap.Size = new System.Drawing.Size(204, 62);
+            this.btnChangeBitmap.TabIndex = 12;
+            this.btnChangeBitmap.Text = "Change bitmap";
+            this.btnChangeBitmap.UseVisualStyleBackColor = true;
+            this.btnChangeBitmap.Click += new System.EventHandler(this.btnChangeBitmap_Click);
+            // 
+            // btnGenerateTexture
+            // 
+            this.btnGenerateTexture.Location = new System.Drawing.Point(290, 572);
+            this.btnGenerateTexture.Name = "btnGenerateTexture";
+            this.btnGenerateTexture.Size = new System.Drawing.Size(204, 62);
+            this.btnGenerateTexture.TabIndex = 13;
+            this.btnGenerateTexture.Text = "Generate texture";
+            this.btnGenerateTexture.UseVisualStyleBackColor = true;
+            this.btnGenerateTexture.Click += new System.EventHandler(this.btnGenerateTexture_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1397, 684);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnGenerateTexture);
+            this.Controls.Add(this.btnChangeBitmap);
+            this.Controls.Add(this.lblAlongConstruction);
+            this.Controls.Add(this.lblAfterConstruction);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.trcMain);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnReduce);
+            this.Controls.Add(this.picAlongConstruction);
+            this.Controls.Add(this.picAfterConstruction);
+            this.Controls.Add(this.picMain);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Color reduction";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAfterConstruction)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlongConstruction)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trcMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,18 +206,19 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox picMain;
+        private System.Windows.Forms.PictureBox picAfterConstruction;
+        private System.Windows.Forms.PictureBox picAlongConstruction;
+        private System.Windows.Forms.Button btnReduce;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trcMain;
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lblAfterConstruction;
+        private System.Windows.Forms.Label lblAlongConstruction;
+        private System.Windows.Forms.Button btnChangeBitmap;
+        private System.Windows.Forms.Button btnGenerateTexture;
     }
 }
 
