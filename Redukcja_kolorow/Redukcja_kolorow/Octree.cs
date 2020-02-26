@@ -6,37 +6,14 @@ using System.Linq;
 
 namespace Redukcja_kolorow
 {
-    public class BinaryColor
-    {
-        public BitArray R;
-        public BitArray G;
-        public BitArray B;
-
-        public BinaryColor(Color color)
-        {
-            R = new BitArray(BitConverter.GetBytes(color.R));
-            G = new BitArray(BitConverter.GetBytes(color.G));
-            B = new BitArray(BitConverter.GetBytes(color.B));
-        }
-        public Color GetColor()
-        {
-            var r = new int[1];
-            var g = new int[1];
-            var b = new int[1];
-            R.CopyTo(r, 0);
-            G.CopyTo(g, 0);
-            B.CopyTo(b, 0);
-            return Color.FromArgb(r[0], g[0], b[0]);
-        }
-    }
     public class Octree
     {
-        public int sum;
-        public bool isLeaf;
-        public bool isLeafParent;
-        public Color color;
-        public Octree[] Next;
-        public Octree parent;
+        private int sum;
+        private bool isLeaf;
+        private bool isLeafParent;
+        private Color color;
+        private Octree[] Next;
+        private Octree parent;
         public Octree()
         {
             Next = new Octree[8];
@@ -44,15 +21,10 @@ namespace Redukcja_kolorow
             isLeaf = false;
             isLeafParent = false;
         }
-
-        public void InsertTreeSecondVersion(BinaryColor color, int depth, int maxLeafNumber)
-        {
-            InsertTree(color, depth);
-            Reduce(maxLeafNumber);
-        }
-
+        #region insert to tree
         public void InsertTree(BinaryColor color, int depth)
         {
+            //depth >=8 means that node is leaf 
             if (depth >= 8)
             {
                 this.color = color.GetColor();
@@ -63,6 +35,7 @@ namespace Redukcja_kolorow
             }
             else
             {
+                //if node is leaf, then update it and return
                 if (isLeaf)
                 {
                     Color newColor = color.GetColor();
@@ -73,6 +46,7 @@ namespace Redukcja_kolorow
                     this.color = Color.FromArgb((int)((double)R / (double)sum), (int)((double)G / (double)sum), (int)((double)B / (double)sum));
                     return;
                 }
+                //if node is not leaf then we have to create another level of tree structure
                 sum++;
                 int depth2 = 8 - depth;
                 if (Next[Branch(color.R[depth2], color.G[depth2], color.B[depth2])] == null)
@@ -84,6 +58,11 @@ namespace Redukcja_kolorow
                     .InsertTree(color, depth + 1);
             }
         }
+        public void InsertTreeSecondVersion(BinaryColor color, int depth, int maxLeafNumber)
+        {
+            InsertTree(color, depth);
+            Reduce(maxLeafNumber);
+        }
 
         private int Branch(bool R, bool G, bool B)
         {
@@ -94,6 +73,9 @@ namespace Redukcja_kolorow
             return res;
         }
 
+        #endregion
+        #region reduce tree
+        //reducing tree until the moment when it has less nodes than count
         public void Reduce(int count)
         {
             List<Octree> leafParents = GetLeafParents();
@@ -114,6 +96,8 @@ namespace Redukcja_kolorow
                 colorCount = colorCount - a + 1;
             }
         }
+
+        //merging parent with all his childs
         //returns old childs count
         private int ReduceNode()
         {
@@ -142,11 +126,13 @@ namespace Redukcja_kolorow
             {
                 int result = x.CompareTo(y);
                 if (result == 0)
-                    return 1;   
+                    return 1;
                 else
                     return result;
             }
         }
+        #endregion
+        #region get data from tree
         public List<Octree> GetLeafParents()
         {
             List<Octree> list = new List<Octree>();
@@ -155,7 +141,7 @@ namespace Redukcja_kolorow
         }
         private void GetLeafParentsRecursion(List<Octree> list)
         {
-            if(isLeaf)
+            if (isLeaf)
                 return;
             else
             {
@@ -168,7 +154,6 @@ namespace Redukcja_kolorow
                 }
             }
         }
-
         public int GetLeafCount(List<Octree> leafParents)
         {
             int count = 0;
@@ -176,7 +161,7 @@ namespace Redukcja_kolorow
             {
                 for (int i = 0; i < 8; i++)
                     if (el.Next[i] != null)
-                        if(el.Next[i].isLeaf)
+                        if (el.Next[i].isLeaf)
                             count++;
             }
             return count;
@@ -192,7 +177,31 @@ namespace Redukcja_kolorow
             }
             return tmp.color;
         }
-
+        #endregion
     }
 
+    //branching supporting class
+    public class BinaryColor
+    {
+        public BitArray R;
+        public BitArray G;
+        public BitArray B;
+
+        public BinaryColor(Color color)
+        {
+            R = new BitArray(BitConverter.GetBytes(color.R));
+            G = new BitArray(BitConverter.GetBytes(color.G));
+            B = new BitArray(BitConverter.GetBytes(color.B));
+        }
+        public Color GetColor()
+        {
+            var r = new int[1];
+            var g = new int[1];
+            var b = new int[1];
+            R.CopyTo(r, 0);
+            G.CopyTo(g, 0);
+            B.CopyTo(b, 0);
+            return Color.FromArgb(r[0], g[0], b[0]);
+        }
+    }
 }

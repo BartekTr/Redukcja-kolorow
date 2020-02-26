@@ -32,9 +32,9 @@
             this.picAfterConstruction = new System.Windows.Forms.PictureBox();
             this.picAlongConstruction = new System.Windows.Forms.PictureBox();
             this.btnReduce = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.barAfterConstruction = new System.Windows.Forms.ProgressBar();
             this.trcMain = new System.Windows.Forms.TrackBar();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.barAlongConstruction = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblAfterConstruction = new System.Windows.Forms.Label();
@@ -83,14 +83,14 @@
             this.btnReduce.UseVisualStyleBackColor = true;
             this.btnReduce.Click += new System.EventHandler(this.btnReduce_Click);
             // 
-            // progressBar1
+            // barAfterConstruction
             // 
-            this.progressBar1.Location = new System.Drawing.Point(814, 314);
-            this.progressBar1.Maximum = 153648;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(518, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.TabIndex = 4;
+            this.barAfterConstruction.Location = new System.Drawing.Point(814, 314);
+            this.barAfterConstruction.Maximum = 153648;
+            this.barAfterConstruction.Name = "barAfterConstruction";
+            this.barAfterConstruction.Size = new System.Drawing.Size(518, 23);
+            this.barAfterConstruction.Step = 1;
+            this.barAfterConstruction.TabIndex = 4;
             // 
             // trcMain
             // 
@@ -104,14 +104,14 @@
             this.trcMain.Value = 1;
             this.trcMain.Scroll += new System.EventHandler(this.trcMain_Scroll);
             // 
-            // progressBar2
+            // barAlongConstruction
             // 
-            this.progressBar2.Location = new System.Drawing.Point(814, 649);
-            this.progressBar2.Maximum = 153648;
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(518, 23);
-            this.progressBar2.Step = 1;
-            this.progressBar2.TabIndex = 7;
+            this.barAlongConstruction.Location = new System.Drawing.Point(814, 649);
+            this.barAlongConstruction.Maximum = 153648;
+            this.barAlongConstruction.Name = "barAlongConstruction";
+            this.barAlongConstruction.Size = new System.Drawing.Size(518, 23);
+            this.barAlongConstruction.Step = 1;
+            this.barAlongConstruction.TabIndex = 7;
             // 
             // label1
             // 
@@ -184,9 +184,9 @@
             this.Controls.Add(this.lblAfterConstruction);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar2);
+            this.Controls.Add(this.barAlongConstruction);
             this.Controls.Add(this.trcMain);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.barAfterConstruction);
             this.Controls.Add(this.btnReduce);
             this.Controls.Add(this.picAlongConstruction);
             this.Controls.Add(this.picAfterConstruction);
@@ -210,9 +210,9 @@
         private System.Windows.Forms.PictureBox picAfterConstruction;
         private System.Windows.Forms.PictureBox picAlongConstruction;
         private System.Windows.Forms.Button btnReduce;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar barAfterConstruction;
         private System.Windows.Forms.TrackBar trcMain;
-        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ProgressBar barAlongConstruction;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblAfterConstruction;
